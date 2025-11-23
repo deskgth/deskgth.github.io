@@ -1,123 +1,491 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub Desktop — загрузка</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-accent: #111827;
+      --primary: #7c3aed;
+      --primary-dark: #4c1d95;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-soft: #1f2937;
+      --radius-lg: 14px;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.55);
+    }
 
-[Link to another page](./another-page.html).
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-There should be whitespace between paragraphs.
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-# Header 1
+    header {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 20px 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-## Header 2
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #f9fafb, #0b1120);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      font-size: 22px;
+    }
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+    .logo-text {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 18px;
+    }
 
-### Header 3
+    nav {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
 
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
+    nav a {
+      padding: 4px 0;
+      position: relative;
+    }
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #7c3aed, #22c55e);
+      transition: width 0.2s ease-out;
+    }
 
-#### Header 4
+    nav a:hover {
+      color: #e5e7eb;
+    }
 
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
+    nav a:hover::after {
+      width: 100%;
+    }
 
-##### Header 5
+    main {
+      flex: 1;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 32px 20px 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 32px;
+      align-items: center;
+    }
 
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 18px;
+      }
+    }
 
-###### Header 6
+    .hero-title {
+      font-size: clamp(32px, 4vw, 40px);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
 
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
+    .hero-title span {
+      background: linear-gradient(120deg, #a855f7, #22c55e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-### There's a horizontal rule below this.
+    .hero-subtitle {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 20px;
+    }
 
-* * *
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(148,163,184,0.25);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
 
-### Here is an unordered list:
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+    }
 
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background-image: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #f9fafb;
+      font-weight: 600;
+      font-size: 15px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
+      white-space: nowrap;
+    }
 
-### And an ordered list:
+    .btn-primary span.small {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.9;
+    }
 
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.07);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.7);
+    }
 
-### And a nested list:
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.75);
+    }
 
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
+    .os-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
-### Small image
+    .os-note strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
 
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
+    .steps-card {
+      margin-top: 28px;
+      padding: 18px 18px 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top left, rgba(148,163,184,0.18), transparent 45%), rgba(15,23,42,0.9);
+      backdrop-filter: blur(12px);
+    }
 
-### Large image
+    .steps-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
 
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
+    .steps {
+      list-style: none;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: grid;
+      gap: 8px;
+    }
 
+    .steps li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: flex-start;
+      gap: 10px;
+    }
 
-### Definition lists can be used with HTML syntax.
+    .steps-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e5e7eb;
+      margin-top: 2px;
+    }
 
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
+    .steps li strong {
+      color: #e5e7eb;
+    }
 
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
+    .right-panel {
+      padding: 18px 18px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top right, rgba(126,34,206,0.25), transparent 50%), rgba(15,23,42,0.95);
+      box-shadow: var(--shadow-soft);
+    }
 
-```
-The final element.
-```
+    .right-title {
+      font-size: 15px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .os-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .os-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .os-card {
+      padding: 12px 11px;
+      border-radius: 10px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.98);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      cursor: default;
+    }
+
+    .os-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .os-name {
+      font-weight: 500;
+    }
+
+    .os-tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      color: #e5e7eb;
+    }
+
+    .os-req {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .checksum {
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px dashed rgba(55,65,81,0.8);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    footer {
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 20px 18px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    footer a {
+      color: var(--text-muted);
+    }
+
+    footer a:hover {
+      color: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🐙</div>
+    <div class="logo-text">GitHub Desktop</div>
+  </div>
+  <nav>
+    <a href="#download">Загрузка</a>
+    <a href="#steps">Инструкция</a>
+    <a href="https://github.com/desktop/desktop" target="_blank" rel="noopener">Исходный код</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Левая часть: заголовок + большая кнопка -->
+  <section>
+    <div class="badge">
+      <span class="badge-dot"></span>
+      <span>Desktop-клиент для работы с Git и GitHub</span>
+    </div>
+
+    <h1 class="hero-title">
+      Скачайте <span>GitHub Desktop</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Упростите работу с репозиториями: коммиты, ветки, pull-request’ы и история — всё из удобного
+      десктоп-приложения для Windows и macOS.
+    </p>
+
+    <!-- Большая кнопка -->
+    <a href="https://desktop.github.com/" target="_blank" rel="noopener">
+      <button class="btn-primary">
+        Скачать GitHub Desktop
+        <span class="small">с официального сайта</span>
+      </button>
+    </a>
+
+    <p class="os-note">
+      Доступно для <strong>Windows 10/11</strong> и <strong>macOS 11+</strong>.
+    </p>
+
+    <!-- Инструкция -->
+    <div class="steps-card" id="steps">
+      <div class="steps-title">Как скачать и установить GitHub Desktop</div>
+      <ul class="steps">
+        <li>
+          <div class="steps-num">1</div>
+          <div>
+            <strong>Откройте страницу загрузки.</strong><br>
+            Нажмите кнопку <em>«Скачать GitHub Desktop»</em> выше — вы попадёте на официальный сайт GitHub.
+          </div>
+        </li>
+        <li>
+          <div class="steps-num">2</div>
+          <div>
+            <strong>Выберите свою операционную систему.</strong><br>
+            Сайт автоматически предложит версию для вашей ОС. При необходимости вы можете вручную
+            выбрать <strong>Windows</strong> или <strong>macOS</strong>.
+          </div>
+        </li>
+        <li>
+          <div class="steps-num">3</div>
+          <div>
+            <strong>Скачайте установщик.</strong><br>
+            Сохраните файл <code>.exe</code> (Windows) или <code>.dmg</code> (macOS).
+          </div>
+        </li>
+        <li>
+          <div class="steps-num">4</div>
+          <div>
+            <strong>Запустите установку.</strong><br>
+            На Windows дважды кликните по <code>GitHubDesktopSetup.exe</code>. На macOS откройте
+            <code>.dmg</code> и перенесите GitHub Desktop в папку <code>Приложения</code>.
+          </div>
+        </li>
+        <li>
+          <div class="steps-num">5</div>
+          <div>
+            <strong>Авторизуйтесь в GitHub.</strong><br>
+            При первом запуске войдите в свой GitHub-аккаунт, чтобы синхронизировать репозитории.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Правая часть: блок про ОС / системные требования -->
+  <aside class="right-panel" id="download">
+    <div class="right-title">Доступные платформы</div>
+
+    <div class="os-grid">
+      <div class="os-card">
+        <div class="os-card-header">
+          <div class="os-name">Windows</div>
+          <div class="os-tag">.exe установщик</div>
+        </div>
+        <div class="os-req">
+          Windows 10 (64-bit) или новее<br>
+          Требуется подключение к Интернету
+        </div>
+      </div>
+
+      <div class="os-card">
+        <div class="os-card-header">
+          <div class="os-name">macOS</div>
+          <div class="os-tag">.dmg образ</div>
+        </div>
+        <div class="os-req">
+          macOS 11 Big Sur или новее<br>
+          Чип Intel или Apple&nbsp;Silicon
+        </div>
+      </div>
+    </div>
+
+    <p class="checksum">
+      Советы по безопасности:<br>
+      • скачивайте GitHub Desktop только с официального сайта;<br>
+      • не запускайте установщики из подозрительных источников;<br>
+      • при необходимости проверяйте цифровую подпись файла.
+    </p>
+  </aside>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> Неофициальная страница-пример. GitHub Desktop — продукт GitHub, Inc.</span>
+  <span>
+    <a href="https://desktop.github.com/" target="_blank" rel="noopener">Официальная страница GitHub Desktop</a>
+  </span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
